@@ -13,4 +13,12 @@
         <module>usgsgrabber</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>br.dmmpka</groupId>
+            <artifactId>usgsgrabber</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

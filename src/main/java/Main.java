@@ -1,5 +1,5 @@
-package br.dmppka.usgsgrabber;
-
+import br.dmppka.usgsgrabber.ResponseFormat;
+import br.dmppka.usgsgrabber.URIBuilder;
 import br.dmppka.usgsgrabber.config.USGSRestConfig;
 import br.dmppka.usgsgrabber.config.USGSRestConfigBuilder;
 
