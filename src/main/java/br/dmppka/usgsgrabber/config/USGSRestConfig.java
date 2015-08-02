@@ -1,12 +1,17 @@
 package br.dmppka.usgsgrabber.config;
 
-import br.dmppka.usgsgrabber.RequestType;
+import br.dmppka.usgsgrabber.ResponseFormat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class USGSRestConfig {
 
-    private RequestType requestType;
+    public static final DateFormat ISO8601 =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+
+    private ResponseFormat responseFormat;
     private Calendar startTime;
     private Calendar endTime;
 
@@ -21,24 +26,24 @@ public class USGSRestConfig {
     private double minMagnitude;
     private double maxMagnitude;
 
-    public RequestType getRequestType() {
-        return requestType;
+    public String getResponseFormat() {
+        return responseFormat == null ? null : responseFormat.getValue();
     }
 
-    public void setRequestType(RequestType requestType) {
-        this.requestType = requestType;
+    public void setResponseFormat(ResponseFormat responseFormat) {
+        this.responseFormat = responseFormat;
     }
 
-    public Calendar getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        return startTime == null ? null : ISO8601.format(startTime.getTime());
     }
 
     public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }
 
-    public Calendar getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return endTime == null ? null : ISO8601.format(endTime.getTime());
     }
 
     public void setEndTime(Calendar endTime) {

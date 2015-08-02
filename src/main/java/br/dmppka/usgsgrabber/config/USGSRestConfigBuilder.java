@@ -1,6 +1,7 @@
 package br.dmppka.usgsgrabber.config;
 
-import br.dmppka.usgsgrabber.RequestType;
+import br.dmppka.usgsgrabber.ResponseFormat;
+import br.dmppka.usgsgrabber.exception.DateParseException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ public class USGSRestConfigBuilder {
 
     public static final String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
 
-    private RequestType requestType;
+    private ResponseFormat responseFormat;
     private Calendar startTime;
     private Calendar endTime;
 
@@ -28,7 +29,7 @@ public class USGSRestConfigBuilder {
 
     public USGSRestConfig build() {
         USGSRestConfig config = new USGSRestConfig();
-        config.setRequestType(requestType);
+        config.setResponseFormat(responseFormat);
         config.setStartTime(startTime);
         config.setEndTime(endTime);
         config.setMinLatitude(minLatitude);
@@ -42,8 +43,8 @@ public class USGSRestConfigBuilder {
         return config;
     }
 
-    public USGSRestConfigBuilder withRequestType(RequestType requestType) {
-        this.requestType = requestType;
+    public USGSRestConfigBuilder withResponseFormat(ResponseFormat format) {
+        this.responseFormat = format;
         return this;
     }
 
@@ -52,11 +53,15 @@ public class USGSRestConfigBuilder {
         return this;
     }
 
-    public USGSRestConfigBuilder withStartTime(String startTime) throws ParseException {
+    public USGSRestConfigBuilder withStartTime(String startTime) {
         Calendar calendar = Calendar.getInstance();
-        Date date = new SimpleDateFormat(DATE_FORMAT).parse(startTime);
-        calendar.setTime(date);
-        this.startTime = calendar;
+        try {
+            Date date = new SimpleDateFormat(DATE_FORMAT).parse(startTime);
+            calendar.setTime(date);
+            this.startTime = calendar;
+        } catch (ParseException e) {
+            throw new DateParseException(startTime);
+        }
         return this;
     }
 
@@ -65,11 +70,15 @@ public class USGSRestConfigBuilder {
         return this;
     }
 
-    public USGSRestConfigBuilder withEndTime(String endTime) throws ParseException {
+    public USGSRestConfigBuilder withEndTime(String endTime) {
         Calendar calendar = Calendar.getInstance();
-        Date date = new SimpleDateFormat(DATE_FORMAT).parse(endTime);
-        calendar.setTime(date);
-        this.endTime = calendar;
+        try {
+            Date date = new SimpleDateFormat(DATE_FORMAT).parse(endTime);
+            calendar.setTime(date);
+            this.endTime = calendar;
+        } catch (ParseException e) {
+            throw new DateParseException(endTime);
+        }
         return this;
     }
 

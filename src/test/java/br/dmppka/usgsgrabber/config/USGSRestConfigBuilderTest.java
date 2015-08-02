@@ -1,9 +1,9 @@
 package br.dmppka.usgsgrabber.config;
 
-import br.dmppka.usgsgrabber.RequestType;
+import br.dmppka.usgsgrabber.ResponseFormat;
+import br.dmppka.usgsgrabber.exception.DateParseException;
 import org.junit.Test;
 
-import java.text.ParseException;
 import java.util.Calendar;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -14,11 +14,11 @@ public class USGSRestConfigBuilderTest {
     @Test
     public void build_shouldFillConfigWithValidValues() {
         Calendar startTime = Calendar.getInstance();
-        startTime.set(2010, Calendar.MAY, 10);
+        startTime.set(2010, Calendar.MAY, 10, 15, 25);
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2010, Calendar.JUNE, 20);
+        endTime.set(2010, Calendar.JUNE, 20, 15, 25);
         USGSRestConfig config = new USGSRestConfigBuilder()
-                .withRequestType(RequestType.XML)
+                .withResponseFormat(ResponseFormat.XML)
                 .withStartTime(startTime)
                 .withEndTime(endTime)
                 .withMinLatitude(1.2)
@@ -31,9 +31,9 @@ public class USGSRestConfigBuilderTest {
                 .withMaxMagnitude(6.7)
                 .build();
 
-        assertThat(config.getRequestType(), equalTo(RequestType.XML));
-        assertThat(config.getStartTime(), equalTo(startTime));
-        assertThat(config.getEndTime(), equalTo(endTime));
+        assertThat(config.getResponseFormat(), equalTo("xml"));
+        assertThat(config.getStartTime(), equalTo("2010-05-10T15:25Z"));
+        assertThat(config.getEndTime(), equalTo("2010-06-20T15:25Z"));
         assertThat(config.getMinLatitude(), equalTo(1.2));
         assertThat(config.getMaxLatitude(), equalTo(2.3));
         assertThat(config.getMinLongitude(), equalTo(3.4));
@@ -45,33 +45,33 @@ public class USGSRestConfigBuilderTest {
     }
 
     @Test
-    public void withStartTime_shouldConvertStringToDate() throws ParseException {
+    public void withStartTime_shouldConvertStringToDate() {
         USGSRestConfig config = new USGSRestConfigBuilder()
                 .withStartTime("21.03.1991 12:05:51")
                 .build();
-        Calendar startTime = config.getStartTime();
+        String startTime = config.getStartTime();
 
-        assertThat(startTime.get(Calendar.DAY_OF_MONTH), equalTo(21));
-        assertThat(startTime.get(Calendar.MONTH), equalTo(Calendar.MARCH));
-        assertThat(startTime.get(Calendar.YEAR), equalTo(1991));
-        assertThat(startTime.get(Calendar.HOUR_OF_DAY), equalTo(12));
-        assertThat(startTime.get(Calendar.MINUTE), equalTo(5));
-        assertThat(startTime.get(Calendar.SECOND), equalTo(51));
+        assertThat(startTime, equalTo("1991-03-21T12:05Z"));
+
     }
 
     @Test
-    public void withEndTime_shouldConvertStringToDate() throws ParseException {
+    public void withEndTime_shouldConvertStringToDate() {
         USGSRestConfig config = new USGSRestConfigBuilder()
                 .withEndTime("21.03.1991 12:05:51")
                 .build();
-        Calendar endTime = config.getEndTime();
+        String endTime = config.getEndTime();
 
-        assertThat(endTime.get(Calendar.DAY_OF_MONTH), equalTo(21));
-        assertThat(endTime.get(Calendar.MONTH), equalTo(Calendar.MARCH));
-        assertThat(endTime.get(Calendar.YEAR), equalTo(1991));
-        assertThat(endTime.get(Calendar.HOUR_OF_DAY), equalTo(12));
-        assertThat(endTime.get(Calendar.MINUTE), equalTo(5));
-        assertThat(endTime.get(Calendar.SECOND), equalTo(51));
+        assertThat(endTime, equalTo("1991-03-21T12:05Z"));
     }
 
+    @Test(expected = DateParseException.class)
+    public void withStartTime_shouldThrowErrorIfDateFormatIsWrong() {
+        new USGSRestConfigBuilder().withStartTime("wrongDateFormat");
+    }
+
+    @Test(expected = DateParseException.class)
+    public void withEndTime_shouldThrowErrorIfDateFormatIsWrong() {
+        new USGSRestConfigBuilder().withEndTime("wrongDateFormat");
+    }
 }
