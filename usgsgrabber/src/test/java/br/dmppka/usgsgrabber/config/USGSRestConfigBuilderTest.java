@@ -14,9 +14,11 @@ public class USGSRestConfigBuilderTest {
     @Test
     public void build_shouldFillConfigWithValidValues() {
         Calendar startTime = Calendar.getInstance();
-        startTime.set(2010, Calendar.MAY, 10, 15, 25);
+        startTime.set(2010, Calendar.MAY, 10, 15, 25, 0);
+        startTime.set(Calendar.MILLISECOND, 0);
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2010, Calendar.JUNE, 20, 15, 25);
+        endTime.set(2010, Calendar.JUNE, 20, 15, 25, 0);
+        endTime.set(Calendar.MILLISECOND, 0);
         USGSRestConfig config = new USGSRestConfigBuilder()
                 .withResponseFormat(ResponseFormat.XML)
                 .withStartTime(startTime)
@@ -31,9 +33,9 @@ public class USGSRestConfigBuilderTest {
                 .withMaxMagnitude(6.7)
                 .build();
 
-        assertThat(config.getResponseFormat(), equalTo("xml"));
-        assertThat(config.getStartTime(), equalTo("2010-05-10T15:25Z"));
-        assertThat(config.getEndTime(), equalTo("2010-06-20T15:25Z"));
+        assertThat(config.getResponseFormatValue(), equalTo("xml"));
+        assertThat(config.getStartTime(), equalTo("2010-05-10T15:25:00.000Z"));
+        assertThat(config.getEndTime(), equalTo("2010-06-20T15:25:00.000Z"));
         assertThat(config.getMinLatitude(), equalTo(1.2));
         assertThat(config.getMaxLatitude(), equalTo(2.3));
         assertThat(config.getMinLongitude(), equalTo(3.4));
@@ -51,7 +53,7 @@ public class USGSRestConfigBuilderTest {
                 .build();
         String startTime = config.getStartTime();
 
-        assertThat(startTime, equalTo("1991-03-21T12:05Z"));
+        assertThat(startTime, equalTo("1991-03-21T12:05:51.000Z"));
 
     }
 
@@ -62,7 +64,7 @@ public class USGSRestConfigBuilderTest {
                 .build();
         String endTime = config.getEndTime();
 
-        assertThat(endTime, equalTo("1991-03-21T12:05Z"));
+        assertThat(endTime, equalTo("1991-03-21T12:05:51.000Z"));
     }
 
     @Test(expected = DateParseException.class)

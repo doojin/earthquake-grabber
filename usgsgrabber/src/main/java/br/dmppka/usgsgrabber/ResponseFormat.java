@@ -2,11 +2,7 @@ package br.dmppka.usgsgrabber;
 
 public class ResponseFormat {
 
-    public static ResponseFormat CSV = new ResponseFormat(1L, "csv");
-    public static ResponseFormat GEO_JSON = new ResponseFormat(2L, "geojson");
-    public static ResponseFormat KML = new ResponseFormat(3L, "kml");
-    public static ResponseFormat TEXT = new ResponseFormat(4L, "text");
-    public static ResponseFormat XML = new ResponseFormat(5L, "xml");
+    public static ResponseFormat XML = new ResponseFormat(1L, "xml");
 
     private long id;
     private String value;

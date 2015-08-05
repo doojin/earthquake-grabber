@@ -9,7 +9,7 @@ import java.util.Calendar;
 public class USGSRestConfig {
 
     public static final DateFormat ISO8601 =
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     private ResponseFormat responseFormat;
     private Calendar startTime;
@@ -26,8 +26,12 @@ public class USGSRestConfig {
     private double minMagnitude;
     private double maxMagnitude;
 
-    public String getResponseFormat() {
+    public String getResponseFormatValue() {
         return responseFormat == null ? null : responseFormat.getValue();
+    }
+
+    public ResponseFormat getResponseFormat() {
+        return responseFormat;
     }
 
     public void setResponseFormat(ResponseFormat responseFormat) {

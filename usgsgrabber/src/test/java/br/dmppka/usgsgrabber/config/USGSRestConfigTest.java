@@ -22,31 +22,15 @@ public class USGSRestConfigTest {
     public void getResponseFormat_shouldReturnNullIfResponseFormatIsNull() {
         config.setResponseFormat(null);
 
-        assertThat(config.getResponseFormat(), equalTo(null));
+        assertThat(config.getResponseFormatValue(), equalTo(null));
     }
 
     @Test
     public void getResponseFormat_shouldReturnTextRepresentationOfResponseFormat() {
-        USGSRestConfig config1 = new USGSRestConfig();
-        config1.setResponseFormat(ResponseFormat.CSV);
+        USGSRestConfig config = new USGSRestConfig();
+        config.setResponseFormat(ResponseFormat.XML);
 
-        USGSRestConfig config2 = new USGSRestConfig();
-        config2.setResponseFormat(ResponseFormat.GEO_JSON);
-
-        USGSRestConfig config3 = new USGSRestConfig();
-        config3.setResponseFormat(ResponseFormat.KML);
-
-        USGSRestConfig config4 = new USGSRestConfig();
-        config4.setResponseFormat(ResponseFormat.TEXT);
-
-        USGSRestConfig config5 = new USGSRestConfig();
-        config5.setResponseFormat(ResponseFormat.XML);
-
-        assertThat(config1.getResponseFormat(), equalTo("csv"));
-        assertThat(config2.getResponseFormat(), equalTo("geojson"));
-        assertThat(config3.getResponseFormat(), equalTo("kml"));
-        assertThat(config4.getResponseFormat(), equalTo("text"));
-        assertThat(config5.getResponseFormat(), equalTo("xml"));
+        assertThat(config.getResponseFormatValue(), equalTo("xml"));
     }
 
     @Test
@@ -59,10 +43,11 @@ public class USGSRestConfigTest {
     @Test
     public void getStartTime_shouldReturnFormattedDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JANUARY, 25, 13, 45);
+        calendar.set(2015, Calendar.JANUARY, 25, 13, 45, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         config.setStartTime(calendar);
 
-        assertThat(config.getStartTime(), equalTo("2015-01-25T13:45Z"));
+        assertThat(config.getStartTime(), equalTo("2015-01-25T13:45:00.000Z"));
     }
 
     @Test
@@ -75,9 +60,10 @@ public class USGSRestConfigTest {
     @Test
     public void getEndTime_shouldReturnFormattedDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JANUARY, 25, 13, 45);
+        calendar.set(2015, Calendar.JANUARY, 25, 13, 45, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         config.setEndTime(calendar);
 
-        assertThat(config.getEndTime(), equalTo("2015-01-25T13:45Z"));
+        assertThat(config.getEndTime(), equalTo("2015-01-25T13:45:00.000Z"));
     }
 }

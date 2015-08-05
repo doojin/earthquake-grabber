@@ -37,17 +37,17 @@ public class URIBuilderTest {
 
         uriBuilder.addResponseFormatParam(uriComponentsBuilder, config);
 
-        verify(uriComponentsBuilder, never()).queryParam(URIBuilder.P_RESPONSE_FORMAT, config.getResponseFormat());
+        verify(uriComponentsBuilder, never()).queryParam(URIBuilder.P_RESPONSE_FORMAT, config.getResponseFormatValue());
     }
 
     @Test
     public void addResponseFormatParam_shouldAddResponseFormatParamIfItIsNotNull() {
         uriBuilder = spy(uriBuilder);
-        config.setResponseFormat(ResponseFormat.CSV);
+        config.setResponseFormat(ResponseFormat.XML);
 
         uriBuilder.addResponseFormatParam(uriComponentsBuilder, config);
 
-        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_RESPONSE_FORMAT, "csv");
+        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_RESPONSE_FORMAT, "xml");
     }
 
     @Test
@@ -63,12 +63,13 @@ public class URIBuilderTest {
     public void addStartTimeParam_shouldAddStartTimeParamIfItIsNotNull() {
         uriBuilder = spy(uriBuilder);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JANUARY, 1, 15, 25);
+        calendar.set(2015, Calendar.JANUARY, 1, 15, 25, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         config.setStartTime(calendar);
 
         uriBuilder.addStartTimeParam(uriComponentsBuilder, config);
 
-        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_START_TIME, "2015-01-01T15:25Z");
+        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_START_TIME, "2015-01-01T15:25:00.000Z");
     }
 
     @Test
@@ -84,12 +85,13 @@ public class URIBuilderTest {
     public void addEndTimeParam_shouldAddEndTimeParamIfItIsNotNull() {
         uriBuilder = spy(uriBuilder);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JANUARY, 1, 15, 25);
+        calendar.set(2015, Calendar.JANUARY, 1, 15, 25, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         config.setEndTime(calendar);
 
         uriBuilder.addEndTimeParam(uriComponentsBuilder, config);
 
-        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_END_TIME, "2015-01-01T15:25Z");
+        verify(uriComponentsBuilder, times(1)).queryParam(URIBuilder.P_END_TIME, "2015-01-01T15:25:00.000Z");
     }
 
     @Test

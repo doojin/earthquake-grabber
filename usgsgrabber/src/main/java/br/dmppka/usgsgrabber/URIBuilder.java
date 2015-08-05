@@ -51,7 +51,7 @@ public class URIBuilder {
     }
 
     void addResponseFormatParam(UriComponentsBuilder builder, USGSRestConfig config) {
-        String responseFormat = config.getResponseFormat();
+        String responseFormat = config.getResponseFormatValue();
         if (responseFormat != null) {
             builder.queryParam(P_RESPONSE_FORMAT, responseFormat);
         }
