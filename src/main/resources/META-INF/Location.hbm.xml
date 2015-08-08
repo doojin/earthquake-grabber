@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="br.dmppka.usgsgrabber.model.Location" table="location">
+        <id name="id">
+            <column name="location_pk" />
+            <generator class="identity" />
+        </id>
+        <property name="latitude">
+            <column name="latitude" />
+        </property>
+        <property name="longitude">
+            <column name="longitude" />
+        </property>
+    </class>
+</hibernate-mapping>

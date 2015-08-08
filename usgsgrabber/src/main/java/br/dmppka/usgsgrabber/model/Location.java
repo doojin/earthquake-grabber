@@ -2,6 +2,8 @@ package br.dmppka.usgsgrabber.model;
 
 public class Location {
 
+    // Providing opportunity to save to DB
+    private int id;
     private double latitude;
     private double longitude;
 
@@ -21,6 +23,14 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,6 +38,7 @@ public class Location {
 
         Location location = (Location) o;
 
+        if (id != location.id) return false;
         if (Double.compare(location.latitude, latitude) != 0) return false;
         return Double.compare(location.longitude, longitude) == 0;
 
@@ -37,8 +48,9 @@ public class Location {
     public int hashCode() {
         int result;
         long temp;
+        result = id;
         temp = Double.doubleToLongBits(latitude);
-        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(longitude);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;

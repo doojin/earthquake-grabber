@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="br.dmppka.usgsgrabber.model.Earthquake" table="earthquake">
+        <id name="id">
+            <column name="earthquake_pk" />
+        </id>
+        <property name="time">
+            <column name="time" />
+        </property>
+        <property name="magnitude">
+            <column name="magnitude" />
+        </property>
+        <many-to-one name="location" class="br.dmppka.usgsgrabber.model.Location" cascade="all">
+            <column name="location_fk" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
