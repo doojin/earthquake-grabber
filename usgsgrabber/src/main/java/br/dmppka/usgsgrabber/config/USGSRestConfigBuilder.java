@@ -53,10 +53,10 @@ public class USGSRestConfigBuilder {
         return this;
     }
 
-    public USGSRestConfigBuilder withStartTime(String startTime) {
+    public USGSRestConfigBuilder withStartTime(String startTime, String dateFormat) {
         Calendar calendar = Calendar.getInstance();
         try {
-            Date date = new SimpleDateFormat(DATE_FORMAT).parse(startTime);
+            Date date = new SimpleDateFormat(dateFormat).parse(startTime);
             calendar.setTime(date);
             this.startTime = calendar;
         } catch (ParseException e) {
@@ -65,21 +65,29 @@ public class USGSRestConfigBuilder {
         return this;
     }
 
+    public USGSRestConfigBuilder withStartTime(String startTime) {
+        return withStartTime(startTime, DATE_FORMAT);
+    }
+
     public USGSRestConfigBuilder withEndTime(Calendar endTime) {
         this.endTime = endTime;
         return this;
     }
 
-    public USGSRestConfigBuilder withEndTime(String endTime) {
+    public USGSRestConfigBuilder withEndTime(String endTime, String dateFormat) {
         Calendar calendar = Calendar.getInstance();
         try {
-            Date date = new SimpleDateFormat(DATE_FORMAT).parse(endTime);
+            Date date = new SimpleDateFormat(dateFormat).parse(endTime);
             calendar.setTime(date);
             this.endTime = calendar;
         } catch (ParseException e) {
             throw new DateParseException(endTime);
         }
         return this;
+    }
+
+    public USGSRestConfigBuilder withEndTime(String endTime) {
+        return withEndTime(endTime, DATE_FORMAT);
     }
 
     public USGSRestConfigBuilder withMinLatitude(double latitude) {

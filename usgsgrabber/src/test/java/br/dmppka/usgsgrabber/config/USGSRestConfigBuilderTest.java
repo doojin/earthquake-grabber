@@ -58,10 +58,32 @@ public class USGSRestConfigBuilderTest {
     }
 
     @Test
+    public void withStartTime_shouldConvertStringToDateUsingCustomDateFormat() {
+        USGSRestConfig config = new USGSRestConfigBuilder()
+                .withStartTime("12:05:51 21.03.1991", "HH:mm:ss dd.MM.yyyy")
+                .build();
+
+        String startTime = config.getStartTime();
+
+        assertThat(startTime, equalTo("1991-03-21T12:05:51.000Z"));
+    }
+
+    @Test
     public void withEndTime_shouldConvertStringToDate() {
         USGSRestConfig config = new USGSRestConfigBuilder()
                 .withEndTime("21.03.1991 12:05:51")
                 .build();
+        String endTime = config.getEndTime();
+
+        assertThat(endTime, equalTo("1991-03-21T12:05:51.000Z"));
+    }
+
+    @Test
+    public void withEndTime_shouldConvertStringToDateUsingCustomDateFormat() {
+        USGSRestConfig config = new USGSRestConfigBuilder()
+                .withEndTime("12:05:51 21.03.1991", "HH:mm:ss dd.MM.yyyy")
+                .build();
+
         String endTime = config.getEndTime();
 
         assertThat(endTime, equalTo("1991-03-21T12:05:51.000Z"));
